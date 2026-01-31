@@ -217,10 +217,6 @@ public class ShortenerServiceCLI{
 
         String user = Optional.ofNullable(cmd.getOptionValue("user")).orElse(System.getenv("USER"));
         UUID uid = UUID.nameUUIDFromBytes(user.getBytes());
-        System.out.println("user: " + user);
-        System.out.println("repo_path: " + settings.getRepositoryPath());
-        System.out.println("ttl: " + settings.getTtl() );
-        System.out.println("max_clics: " + settings.getMaxClics());
 
         FileLinkRepository repo = new FileLinkRepository(Paths.get(settings.getRepositoryPath(), "repo").toString());
         ShortenerService svc = new ShortenerService(repo, new Base62Generator());

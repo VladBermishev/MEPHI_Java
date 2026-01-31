@@ -50,3 +50,7 @@ application {
 run{
     standardInput = System.in
 }
+
+tasks.withType(JavaCompile).each {
+    it.options.compilerArgs.add('--enable-preview')
+}

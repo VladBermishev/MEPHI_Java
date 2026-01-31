@@ -65,6 +65,28 @@ jobs:
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
       - name: Junit test
         run: ./gradlew test
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            mkdir -p ~/app
+            cd ~/app
+            git pull origin main
+            echo "Deployment complete"
+      
+    
       
   dependency-submission:
 
